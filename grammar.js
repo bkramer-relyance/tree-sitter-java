@@ -228,6 +228,7 @@ module.exports = grammar({
     instanceof_expression: $ => prec(PREC.REL, seq(
       field('left', $.expression),
       'instanceof',
+      optional('final'),
       field('right', $._type),
       field('name', optional(choice($.identifier, $._reserved_identifier)))
     )),
@@ -908,6 +909,7 @@ module.exports = grammar({
       field('name', $.identifier),
       optional(field('type_parameters', $.type_parameters)),
       field('parameters', $.formal_parameters),
+      optional(field('interfaces', $.super_interfaces)),
       field('body', $.class_body)
     ),
 
@@ -967,6 +969,7 @@ module.exports = grammar({
         $.enum_declaration,
         $.method_declaration,
         $.class_declaration,
+        $.record_declaration,
         $.interface_declaration,
         $.annotation_type_declaration,
         ';'
